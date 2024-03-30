@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
-import memberAreaRouter from './auth-router'
+import authRouter from './auth-router'
+import productRouter from './product-router'
 
 const routes = Router()
 
-routes.use('/auth', memberAreaRouter)
+routes.use('/auth', authRouter)
+routes.use('/product', productRouter)
 
 export default routes

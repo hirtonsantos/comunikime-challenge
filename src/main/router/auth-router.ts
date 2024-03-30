@@ -3,8 +3,8 @@ import { Router } from 'express'
 import { adaptRoute } from '../adapters/express-router-adapter'
 import { makeSignUpController } from '../factories/controllers/signup-controller-factory'
 
-const memberAreaRouter = Router()
+const authRouter = Router()
 
-memberAreaRouter.post('/signup', adaptRoute(makeSignUpController()))
+authRouter.post('/signup', adaptRoute(makeSignUpController()))
 
-export default memberAreaRouter
+export default authRouter

@@ -4,14 +4,13 @@
       "module": "commonjs",
       "outDir": "dist",
       "strict": true,
-      "rootDir": "src"
+      "rootDir": "src",
+      "esModuleInterop": true
     },
     "include": [
       "src/**/*.tsx",
       "src/**/*.ts",
-      "./jest.config.js"
+            "./jest.config.js"
     ],
-    "exclude": [
-      "node_modules"
-    ]
+    "exclude": ["node_modules", "./build/**/*"],
 }

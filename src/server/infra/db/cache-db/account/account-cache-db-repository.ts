@@ -6,7 +6,9 @@ import { type AddAccountModel, type AccountModel } from '../../../../domain/mode
 import { type LoadAccountByProductId } from '../../../../domain/usecases/load-account-by-product-id'
 import { type LoadAccountByToken } from '../../../../domain/usecases/load-account-by-token'
 
-export class AccountCacheRepository implements AddAccountRepository, LoadAccountByToken, UpdateAccessTokenRepository, LoadAccountByEmailRepository, LoadAccountByProductId {
+export class AccountCacheRepository implements 
+AddAccountRepository, LoadAccountByToken, UpdateAccessTokenRepository, 
+LoadAccountByEmailRepository, LoadAccountByProductId {
   async add (account: AddAccountModel): Promise < AccountModel > {
     const accountCreated = {
       ...account,

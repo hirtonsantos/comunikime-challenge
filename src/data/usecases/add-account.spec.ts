@@ -16,7 +16,7 @@ const makeAddRepository = (): MakeAccountRepository => {
 }
 
 class MakeEncrypt implements EncryptProtocol {
-  async handle (password: string): Promise<string> {
+  async hash (password: string): Promise<string> {
     return await new Promise(resolve => { resolve('hashed_password') })
   }
 }
@@ -42,7 +42,7 @@ const makeSup = (): MakeSupTypes => {
 describe('add-account', () => {
   test('should call be function with correct password value', async () => {
     const { sup, makeEncryptStub } = makeSup()
-    const encrypterSpyOn = jest.spyOn(makeEncryptStub, 'handle')
+    const encrypterSpyOn = jest.spyOn(makeEncryptStub, 'hash')
     const account = {
       name: 'name_valid',
       email: 'email_valid',
@@ -55,7 +55,7 @@ describe('add-account', () => {
 
   test('should be return in Encrypt value with password_hash', async () => {
     const { sup, makeEncryptStub } = makeSup()
-    const spyOnAddAccountRepository = jest.spyOn(makeEncryptStub, 'handle')
+    const spyOnAddAccountRepository = jest.spyOn(makeEncryptStub, 'hash')
     const accountData = {
       id: 'valid_id',
       name: 'name_valid',

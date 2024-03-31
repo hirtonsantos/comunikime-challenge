@@ -1,6 +1,8 @@
 import { SignUpController } from '.'
+import { type Authentication } from '../../../domain/usecases/authentication'
 import { InternalServerError, InvalidEmailError, MissingParamError } from './errors'
 import type { AccountModel, AddAccountModel, EmailValidator, HttpRequest, AddAccount } from './protocols'
+import faker from 'faker'
 
 class MakeAddAccount implements AddAccount {
   async add (account: AddAccountModel): Promise<AccountModel> {
@@ -30,6 +32,17 @@ const emailValidator = (): MakeEmailValidator => {
   return sup
 }
 
+export class AuthenticationSpy implements Authentication {
+  result = {
+    accessToken: faker.datatype.uuid(),
+    name: faker.name.findName()
+  }
+
+  async auth (params: Authentication.Params): Promise<Authentication.Result> {
+    return this.result
+  }
+}
+
 interface MakeSup {
   sup: SignUpController
   fakeEmailValidator: MakeEmailValidator
@@ -37,9 +50,10 @@ interface MakeSup {
 }
 
 const makeSup = (): MakeSup => {
+  const fakeAuthenticationSpy = new AuthenticationSpy()
   const fakeEmailValidator = emailValidator()
   const fakeAddAccount = addAccountSup()
-  const sup = new SignUpController(fakeEmailValidator, fakeAddAccount)
+  const sup = new SignUpController(fakeEmailValidator, fakeAddAccount, fakeAuthenticationSpy)
   return { sup, fakeEmailValidator, fakeAddAccount }
 }
 

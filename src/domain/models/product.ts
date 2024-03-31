@@ -6,7 +6,7 @@ export enum ProductStatus {
 }
 
 export interface ProductModel {
-  id: string
+  id: number
   name: string
   price: string
   description: string

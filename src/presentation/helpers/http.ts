@@ -1,3 +1,4 @@
+import { AccessDeniedError } from '../errors/acessDeniedError'
 import { InternalServerError } from '../errors/internalServerError'
 import { type HttpResponse } from '../protocols/http'
 
@@ -18,6 +19,11 @@ export const internalServerError = (): HttpResponse => {
 export const forbidden = (error: Error): HttpResponse => ({
   status: 403,
   body: error
+})
+
+export const unauthorized = (): HttpResponse => ({
+  status: 403,
+  body: new AccessDeniedError()
 })
 
 export const ok = (data: any): HttpResponse => {

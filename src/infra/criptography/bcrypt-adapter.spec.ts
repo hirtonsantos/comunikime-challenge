@@ -20,13 +20,13 @@ describe('Bcrypt Adapter', () => {
   test('should call be Bcrypt with correct value', async () => {
     const { bcryptSup } = makeSup()
     const spyOn = jest.spyOn(Bcrypt, 'hash')
-    await bcryptSup.handle('any_value')
+    await bcryptSup.hash('any_value')
     expect(spyOn).toHaveBeenCalledWith('any_value', salt)
   })
 
   test('should Bcrypt returns with hash value', async () => {
     const { bcryptSup } = makeSup()
-    const hash = await bcryptSup.handle('any_value')
+    const hash = await bcryptSup.hash('any_value')
     expect(hash).toBe('hash')
   })
 })

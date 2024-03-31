@@ -3,9 +3,10 @@ import { type LoadAccountByEmailRepository } from '../../../../data/protocols/lo
 import { type LoadAccountByTokenRepository } from '../../../../data/protocols/load-account-by-token-repository'
 import { type UpdateAccessTokenRepository } from '../../../../data/protocols/update-access-token-repository'
 import { type AddAccountModel, type AccountModel } from '../../../../domain/models/account'
+import { type LoadAccountByProductId } from '../../../../domain/usecases/load-account-by-product-id'
 import { type LoadAccountByToken } from '../../../../domain/usecases/load-account-by-token'
 
-export class AccountCacheRepository implements AddAccountRepository, LoadAccountByToken, UpdateAccessTokenRepository, LoadAccountByEmailRepository {
+export class AccountCacheRepository implements AddAccountRepository, LoadAccountByToken, UpdateAccessTokenRepository, LoadAccountByEmailRepository, LoadAccountByProductId {
   async add (account: AddAccountModel): Promise < AccountModel > {
     const accountCreated = {
       ...account,
@@ -30,6 +31,12 @@ export class AccountCacheRepository implements AddAccountRepository, LoadAccount
       id: '546',
       name: 'Hirton Santos',
       password: '12345678'
+    }
+  }
+
+  async loadByProductId (productId: number): Promise<LoadAccountByProductId.Result> {
+    return {
+      id: 999
     }
   }
 }

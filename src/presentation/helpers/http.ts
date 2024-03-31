@@ -15,9 +15,14 @@ export const internalServerError = (): HttpResponse => {
   }
 }
 
+export const forbidden = (error: Error): HttpResponse => ({
+  status: 403,
+  body: error
+})
+
 export const ok = (data: any): HttpResponse => {
   return {
-    status: 201,
+    status: 200,
     body: data
   }
 }

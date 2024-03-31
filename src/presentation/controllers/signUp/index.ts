@@ -1,11 +1,14 @@
+import { type Authentication } from '../../../domain/usecases/authentication'
 import { InvalidEmailError, MissingParamError } from './errors'
 import { badRequestError, internalServerError, ok } from './helpers'
 import type { Controller, EmailValidator, HttpRequest, HttpResponse, AddAccount } from './protocols'
 
 export class SignUpController implements Controller {
-  private readonly emailValidator
-  private readonly addAccount
-  constructor (emailValidator: EmailValidator, addAccount: AddAccount) {
+  constructor (
+    private readonly emailValidator: EmailValidator,
+    private readonly addAccount: AddAccount,
+    private readonly authentication: Authentication
+  ) {
     this.emailValidator = emailValidator
     this.addAccount = addAccount
   }
@@ -26,13 +29,17 @@ export class SignUpController implements Controller {
       if (password !== confirmPassword) {
         return badRequestError(new MissingParamError('confirmPassword'))
       }
-      const account = await this.addAccount.add({
+      const accountCreated = await this.addAccount.add({
         name,
         email,
         password,
         role
       })
-      return ok(account)
+      const authenticationModel = await this.authentication.auth({
+        email,
+        password: accountCreated.password
+      })
+      return ok(authenticationModel)
     } catch {
       return internalServerError()
     }

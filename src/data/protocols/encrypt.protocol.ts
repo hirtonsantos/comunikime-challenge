@@ -1,3 +1,3 @@
 export interface EncryptProtocol {
-  handle: (password: string) => Promise<string>
+  hash: (password: string) => Promise<string>
 }

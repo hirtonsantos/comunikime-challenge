@@ -10,7 +10,7 @@ export class AddAccountData implements AddAccount {
   ) {}
 
   async add (accountData: AddAccountModel): Promise<AccountModel> {
-    const hashedPassword = await this.encryptValidator.handle(accountData.password)
+    const hashedPassword = await this.encryptValidator.hash(accountData.password)
     const createAccount = Object.assign({}, accountData, { password: hashedPassword })
     const account = await this.addAccountRepository.add(createAccount)
     return account

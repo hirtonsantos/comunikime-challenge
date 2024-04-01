@@ -3,10 +3,9 @@ import MainSectionClass from "@/components/MenuContainer/mainSectionClass";
 import { productList } from "@/constants/store-mock";
 import { useState } from "react";
 import './page.css'
-import Header from "@/components/MenuContainer/header";
 import HeaderClass from "@/components/MenuContainer/headerClass";
 
-export default function Home() {
+export default function Home({session}: {session: any}) {
 
   const [userInput, setUserinput] = useState('')
   const [products, setProducts] = useState<any[]>(productList)
@@ -43,15 +42,15 @@ export default function Home() {
   return (
     <div className="App">
       <header className="App-header">
-        <HeaderClass userinput={userInput} setUserinput={setUserinput} showProducts={showProducts}/>
-        <MainSectionClass
-          currentSale={currentSale}
-          handleClick={handleClick}
-          products={products}
-          remove={remove}
-          totalPrice={totalPrice}
-          setCurrentSale={(item: any[]) => setCurrentSale(item)}
-        />
+          <HeaderClass userinput={userInput} setUserinput={setUserinput} showProducts={showProducts} session={session}/>
+          <MainSectionClass
+            currentSale={currentSale}
+            handleClick={handleClick}
+            products={products}
+            remove={remove}
+            totalPrice={totalPrice}
+            setCurrentSale={(item: any[]) => setCurrentSale(item)}
+          />
       </header>
     </div>
   );

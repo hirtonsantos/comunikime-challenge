@@ -1,6 +1,9 @@
 import { FC } from "react";
 import Header from "./header";
 import MainSection from "./mainSection";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import HeaderClass from "./headerClass";
 
 interface MenuContainerProps {
     currentSale: any[];
@@ -16,7 +19,7 @@ interface MenuContainerProps {
     userinput: string;
 }
 
-const MenuContainer: FC<MenuContainerProps> = ({
+const MenuContainer: FC<MenuContainerProps> = async ({
     currentSale,
     setProducts,
     setCurrentSale,
@@ -28,9 +31,10 @@ const MenuContainer: FC<MenuContainerProps> = ({
     setUserinput,
     userinput,
 }) => {
+    const session = await getServerSession(authOptions);
     return (
         <div>
-            <Header setUserinput={setUserinput} userinput={userinput} showProducts={showProducts} />
+            <HeaderClass setUserinput={setUserinput} userinput={userinput} showProducts={showProducts} session={session} />
             <MainSection
                 currentSale={currentSale}
                 setCurrentSale={setCurrentSale}

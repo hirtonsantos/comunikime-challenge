@@ -1,13 +1,16 @@
 import { FC } from 'react';
 import './style.css'
+import SignIn from '../User/signIn';
+import { Session } from 'next-auth';
 
 interface HeaderProps {
     setUserinput: (input: string) => void;
     userinput: string;
     showProducts: (param: string, userinput: string) => void
+    session: any;
 }
 
-const HeaderClass: FC<HeaderProps> = ({ setUserinput, userinput, showProducts }) => {
+const HeaderClass: FC<HeaderProps> = ({ setUserinput, userinput, showProducts, session }) => {
     return (
         <header className="pesquisa">
             <div>
@@ -20,6 +23,9 @@ const HeaderClass: FC<HeaderProps> = ({ setUserinput, userinput, showProducts })
                     {' '}
                     Buscar{' '}
                 </button>
+            </div>
+            <div className="order-3 col-start-8 col-end-8 flex justify-end">        
+              <SignIn session={session}/>
             </div>
         </header>
     );

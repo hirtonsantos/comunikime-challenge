@@ -1,10 +1,9 @@
 "use client";
 
 import { Github } from "lucide-react";
-import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 
-export default function SignIn({session}: {session: Session | null}) {
+export default function SignIn() {
   return (
     <div>
       <button

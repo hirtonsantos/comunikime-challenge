@@ -1,8 +1,5 @@
 import { FC } from "react";
-import Header from "./header";
 import MainSection from "./mainSection";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import HeaderClass from "./headerClass";
 
 interface MenuContainerProps {
@@ -31,10 +28,9 @@ const MenuContainer: FC<MenuContainerProps> = async ({
     setUserinput,
     userinput,
 }) => {
-    const session = await getServerSession(authOptions);
     return (
         <div>
-            <HeaderClass setUserinput={setUserinput} userinput={userinput} showProducts={showProducts} session={session} />
+            <HeaderClass setUserinput={setUserinput} userinput={userinput} showProducts={showProducts} />
             <MainSection
                 currentSale={currentSale}
                 setCurrentSale={setCurrentSale}

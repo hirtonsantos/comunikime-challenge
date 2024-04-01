@@ -5,7 +5,7 @@ import { useState } from "react";
 import './page.css'
 import HeaderClass from "@/components/MenuContainer/headerClass";
 
-export default function Home({session}: {session: any}) {
+export default function Home() {
 
   const [userInput, setUserinput] = useState('')
   const [products, setProducts] = useState<any[]>(productList)
@@ -42,7 +42,7 @@ export default function Home({session}: {session: any}) {
   return (
     <div className="App">
       <header className="App-header">
-          <HeaderClass userinput={userInput} setUserinput={setUserinput} showProducts={showProducts} session={session}/>
+          <HeaderClass userinput={userInput} setUserinput={setUserinput} showProducts={showProducts}/>
           <MainSectionClass
             currentSale={currentSale}
             handleClick={handleClick}

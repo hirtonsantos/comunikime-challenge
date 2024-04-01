@@ -1,4 +1,4 @@
-import { SignUpController } from '../../../presentation/controllers/signUp'
+import { SignUpController } from '@/server/presentation/controllers/signUp'
 import { type Controller } from '../../../presentation/protocols'
 import { EmailValidatorAdapter } from '../../../utils/email-validator-adapter'
 import { makeAddCacheAccount } from '../usecases/add-account'

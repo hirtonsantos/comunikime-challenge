@@ -7,7 +7,7 @@ export interface ProductModel {
   price: string
   description: string | null
   quantity: number
-  suportMailAdress: string
+  suportMailAdress: string | null
   status: ProductStatus | null
   category: string
 }
@@ -18,5 +18,5 @@ export interface AddProductModel {
   description: string
   quantity: number
   category: string
-  suportMailAdress: string
+  suportMailAdress: string | null
 }

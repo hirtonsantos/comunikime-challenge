@@ -1,6 +1,7 @@
 // src/components/SaleItem/SaleItem.tsx
 import { FC } from 'react';
 import Image from 'next/image';
+import ImageDefault from '@/assets/What-is-a-Product.png'
 
 interface SaleItemProps {
     item: any; /*SaleItemType;*/
@@ -12,7 +13,7 @@ const SaleItemClass: FC<SaleItemProps> = ({ item, onRemove }) => {
     return (
         <span>
             <div className="imagem-span">
-                <Image src={item.img} alt="car-image" width={420} height={70}/>
+                <Image src={ImageDefault} alt="car-image" width={420} height={70}/>
             </div>
             <div className="details-span">
                 <div className="informations-products">

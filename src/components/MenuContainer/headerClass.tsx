@@ -7,9 +7,10 @@ interface HeaderProps {
     setUserinput: (input: string) => void;
     userinput: string;
     showProducts: (param: string, userinput: string) => void
+    setPopup: any;
 }
 
-const HeaderClass: FC<HeaderProps> = ({ setUserinput, userinput, showProducts }) => {
+const HeaderClass: FC<HeaderProps> = ({ setUserinput, userinput, showProducts, setPopup }) => {
     return (
         <header className="pesquisa">
             <div>
@@ -24,7 +25,7 @@ const HeaderClass: FC<HeaderProps> = ({ setUserinput, userinput, showProducts })
                 </button>
             </div>
             <div className="order-3 col-start-8 col-end-8 flex justify-end">        
-              <SignIn/>
+              <SignIn setPopUp={setPopup}/>
             </div>
         </header>
     );

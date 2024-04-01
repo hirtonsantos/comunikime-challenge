@@ -9,6 +9,7 @@ interface CardProductsProps {
 }
 
 const CardProducts: FC<CardProductsProps> = ({ items, totalPrice, onRemoveItem, onClearItems }) => {
+    console.log({totalPrice})
     return (
         <div className="bg-white p-4 max-w-md mx-auto">
             <div className="bg-green-500 rounded-t-2xl p-4">
@@ -22,7 +23,7 @@ const CardProducts: FC<CardProductsProps> = ({ items, totalPrice, onRemoveItem, 
                     <div className="bg-gray-200 rounded-b-xl p-4 flex justify-between">
                         <div className="flex flex-col items-center">
                             <p className="font-bold text-lg"> Total: </p>
-                            <p className="text-gray-700"> R$ {totalPrice.toFixed(2)} </p>
+                            <p className="text-gray-700"> R$ {totalPrice} </p>
                         </div>
                         <div className="flex items-center">
                             <button className="bg-red-500 text-white px-4 py-2 rounded-lg" onClick={onClearItems}> Limpar lista </button>

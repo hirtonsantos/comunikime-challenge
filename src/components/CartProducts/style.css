@@ -193,6 +193,9 @@ span button {
     align-items: center;
     width: 80%;
     padding: 0px 20px;
+    svg {
+        cursor: pointer;
+    }
 }
 
 

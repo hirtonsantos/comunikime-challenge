@@ -1,6 +1,10 @@
+
+
 import "./globals.css";
 import { Inter } from "next/font/google";
-import Home from "./page";
+import { AuthProvider } from "@/contexts/AuthContext";
+import Providers from "./providers";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,9 +21,14 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true}>
-          <Home />
-      </body>
+      <AuthProvider>
+        <body suppressHydrationWarning={true}>
+          <Providers>
+            {children}
+            <ToastContainer/>
+          </Providers>
+        </body>
+      </AuthProvider>
     </html>
   );
 }

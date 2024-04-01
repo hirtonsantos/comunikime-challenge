@@ -6,6 +6,7 @@ export interface CustomRequest extends Request {
 }
 
 export const adaptRoute = (controller: Controller) => {
+  console.log('ola')
   return async (req: CustomRequest, res: Response) => {
     const request = {
       body: { ...req.body || {} },

@@ -1,5 +1,5 @@
 import { badRequestError, internalServerError, ok } from '../../helpers'
-import { InvalidEmailError } from '../signUp/errors'
+import { InvalidEmailError } from '../signIn/errors'
 import type { EmailValidator, Controller, AddProduct, HttpRequest, HttpResponse } from './protocols'
 
 export class AddProductController implements Controller {
@@ -12,13 +12,17 @@ export class AddProductController implements Controller {
 
   async handler (httpRequest: AddProductController.Request): Promise<HttpResponse> {
     try {
-      const { suportMailAdress } = httpRequest.body
+      // const { suportMailAdress } = httpRequest.body
       const accountId = Number(httpRequest.accountId)
+      /*
       const emailIsValid = this.emailValidator.isValid(suportMailAdress)
       if (!emailIsValid) {
         return badRequestError(new InvalidEmailError())
       }
+      */
       const productData = httpRequest.body
+      productData.quantity = Number(productData.quantity)
+      console.log({productData})
       const product = await this.addProduct.add(productData, accountId)
 
       return ok(product)

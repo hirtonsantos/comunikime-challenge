@@ -8,7 +8,7 @@ interface MainSectionProps {
     setCurrentSale: (sale: any[]) => void;
     remove: () => void;
     totalPrice: number;
-    // products: ProductType[];
+    buyProducts: () => void;
     products: any[]
     handleClick: (id: number) => void;
 }
@@ -20,6 +20,7 @@ const MainSectionClass: FC<MainSectionProps> = ({
     totalPrice,
     products,
     handleClick,
+    buyProducts
 }) => {
 
     function removeItem (itemRemove: number){
@@ -44,6 +45,7 @@ const MainSectionClass: FC<MainSectionProps> = ({
                 ))}
             </section>
             <CardProductsClass
+                buyProducts={buyProducts}
                 items={currentSale}
                 onClearItems={remove}
                 onRemoveItem={removeItem}

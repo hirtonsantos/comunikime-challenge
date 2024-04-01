@@ -34,7 +34,7 @@ model Product {
   price            String
   description      String?
   quantity         Int
-  suportMailAdress String
+  suportMailAdress String?
   status           ProductStatus? @default(PENDING)
   category         String
   ownerId          Int           @map("owner_id")

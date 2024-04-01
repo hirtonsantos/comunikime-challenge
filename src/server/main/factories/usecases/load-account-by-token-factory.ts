@@ -6,7 +6,7 @@ import { JwtAdapter } from '../../../infra/criptography/jwt-adapter'
 import { UserRepositoryPrisma } from '@/server/infra/repositories/prisma/user/User.repository'
 
 export const makeDbLoadAccountByToken = (): LoadAccountByToken => {
-  const jwtAdapter = new JwtAdapter('secret')
+  const jwtAdapter = new JwtAdapter('123')
 
   const prismaService = prismaConnection
   const addAccountRepo = new UserRepositoryPrisma(prismaService)

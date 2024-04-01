@@ -8,7 +8,7 @@ import { UserRepositoryPrisma } from '@/server/infra/repositories/prisma/user/Us
 export const makeDbAuthentication = (): Authentication => {
   const salt = 12
   const bcryptAdapter = new BcryptAdapter(salt)
-  const jwtAdapter = new JwtAdapter('secret')
+  const jwtAdapter = new JwtAdapter('123')
 
   const prismaService = prismaConnection
   const addAccountRepo = new UserRepositoryPrisma(prismaService)

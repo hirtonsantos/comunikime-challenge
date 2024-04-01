@@ -1,15 +1,11 @@
-export enum SellCurrentStatus {
-  REFUNDED = 'REFUNDED',
-  PAID = 'PAID',
-  EXPIRED = 'EXPIRED',
-}
+import { SellCurrentStatus } from "@prisma/client"
+
 
 export interface SellModel {
   id: number
-  status: SellCurrentStatus
+  status: SellCurrentStatus | null
   totalCents: string
   customerId: number
-  ownerId: number
 }
 
 export interface AddSellModel {

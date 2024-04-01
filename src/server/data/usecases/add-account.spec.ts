@@ -1,11 +1,16 @@
-import { AccountRole, type AccountModel, type AddAccountModel } from '../../domain/models/account'
+import { UserRole } from '@prisma/client'
+import { type AccountModel, type AddAccountModel } from '../../domain/models/account'
 import { type AddAccountRepository } from '../protocols/add-account.repository'
 import { type EncryptProtocol } from '../protocols/encrypt.protocol'
 import { AddAccountData } from './add-account'
 
 class MakeAccountRepository implements AddAccountRepository {
   async add (account: AddAccountModel): Promise<AccountModel> {
-    const accountCreated = Object.assign({}, account, { password: 'hashed_password', id: 'valid_id' })
+    const accountCreated: AccountModel = Object.assign({}, account, { 
+      password: 'hashed_password', 
+      avatarUrl: '',
+      id: 98
+    })
     return await new Promise(resolve => { resolve(accountCreated) })
   }
 }
@@ -47,7 +52,7 @@ describe('add-account', () => {
       name: 'name_valid',
       email: 'email_valid',
       password: 'password_valid',
-      role: AccountRole.ADMINISTRATOR
+      role: UserRole.ADMINISTRATOR
     }
     await sup.add(account)
     expect(encrypterSpyOn).toHaveBeenCalledWith('password_valid')
@@ -57,11 +62,12 @@ describe('add-account', () => {
     const { sup, makeEncryptStub } = makeSup()
     const spyOnAddAccountRepository = jest.spyOn(makeEncryptStub, 'hash')
     const accountData = {
-      id: 'valid_id',
+      id: 98,
+      avatarUrl: "",
       name: 'name_valid',
       email: 'email_valid',
       password: 'password_valid',
-      role: AccountRole.ADMINISTRATOR
+      role: UserRole.ADMINISTRATOR
     }
     await sup.add(accountData)
     await expect(spyOnAddAccountRepository.mock.results[0].value).resolves.toEqual('hashed_password')
@@ -71,11 +77,12 @@ describe('add-account', () => {
     const { sup, makeAddRepositoryStub } = makeSup()
     const spyOnAddAccountRepository = jest.spyOn(makeAddRepositoryStub, 'add')
     const accountDataRequest = {
-      id: 'valid_id',
+      id: 98,
+      avatarUrl: "",
       name: 'name_valid',
       email: 'email_valid',
       password: 'password_valid',
-      role: AccountRole.ADMINISTRATOR
+      role: UserRole.ADMINISTRATOR
     }
     await sup.add(accountDataRequest)
     const spyResults = spyOnAddAccountRepository.mock.results[0].value
@@ -87,11 +94,12 @@ describe('add-account', () => {
   test('should be return account created', async () => {
     const { sup } = makeSup()
     const accountDataRequest = {
-      id: 'valid_id',
+      id: 98,
+      avatarUrl: "",
       name: 'name_valid',
       email: 'email_valid',
       password: 'password_valid',
-      role: AccountRole.ADMINISTRATOR
+      role: UserRole.ADMINISTRATOR
     }
     const account = await sup.add(accountDataRequest)
     expect({ ...account }).toEqual({ ...accountDataRequest, password: 'hashed_password' })

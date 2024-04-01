@@ -1,19 +1,17 @@
-export enum AccountRole {
-  ADMINISTRATOR = 'ADMINISTRATOR',
-  CUSTOMER = 'CUSTOMER'
-}
+import { UserRole } from "@prisma/client"
 
 export interface AccountModel {
-  id: string
+  id: number
   name: string
   email: string
-  password: string
-  role: AccountRole
+  password: string | null
+  avatarUrl: string | null
+  role: UserRole
 }
 
 export interface AddAccountModel {
   name: string
   email: string
   password: string
-  role: AccountRole
+  role: UserRole
 }

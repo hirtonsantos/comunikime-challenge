@@ -1,20 +1,18 @@
+import { SellRepositoryPrisma } from '@/server/infra/repositories/prisma/sell/Sell.repository'
 import { AddSellData } from '../../../data/usecases/add-sell'
-import { SaveSellProductData } from '../../../data/usecases/save-sell-product'
-import { AccountCacheRepository } from '../../../infra/db/cache-db/account/account-cache-db-repository'
-import { ProductCacheDb } from '../../../infra/db/cache-db/product/add-product'
-import { SellProductCacheRepository } from '../../../infra/db/cache-db/sell-product/sell-product-cache-db-repository'
-import { SellCacheRepository } from '../../../infra/db/cache-db/sell/sell-cache-db-repository'
 import { AddSellController } from '../../../presentation/controllers/addSell'
 import { type Controller } from '../../../presentation/protocols'
+import { prismaConnection } from '@/server/infra/db/prisma'
+import { UserRepositoryPrisma } from '@/server/infra/repositories/prisma/user/User.repository'
 
 export const makeAddSellController = (): Controller => {
-  const sellRepository = new SellCacheRepository()
-  const loadAccountByProductIdRepository = new AccountCacheRepository()
-  const loadProductByIdRepository = new ProductCacheDb()
-  const addSell = new AddSellData(sellRepository, loadAccountByProductIdRepository, loadProductByIdRepository)
+  const prismaService = prismaConnection
 
-  const sellProductRepo = new SellProductCacheRepository()
-  const addSellProduct = new SaveSellProductData(sellProductRepo, loadAccountByProductIdRepository)
-  const controller = new AddSellController(addSell, addSellProduct)
+  const sellRepository = new SellRepositoryPrisma(prismaService)
+  const loadAccountByProductIdRepository = new UserRepositoryPrisma(prismaConnection)
+
+  const addSell = new AddSellData(sellRepository, loadAccountByProductIdRepository)
+
+  const controller = new AddSellController(addSell)
   return controller
 }

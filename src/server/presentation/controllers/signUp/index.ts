@@ -35,9 +35,10 @@ export class SignUpController implements Controller {
         password,
         role
       })
+      const pass = accountCreated.password as string
       const authenticationModel = await this.authentication.auth({
         email,
-        password: accountCreated.password
+        password: pass
       })
       return ok(authenticationModel)
     } catch {

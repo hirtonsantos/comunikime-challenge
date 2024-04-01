@@ -1,3 +1,4 @@
+import { UserRole } from '@prisma/client'
 import { SignUpController } from '.'
 import { type Authentication } from '../../../domain/usecases/authentication'
 import { InternalServerError, InvalidEmailError, MissingParamError } from './errors'
@@ -6,9 +7,10 @@ import faker from 'faker'
 
 class MakeAddAccount implements AddAccount {
   async add (account: AddAccountModel): Promise<AccountModel> {
-    const fakeAccount = {
+    const fakeAccount: AccountModel = {
       ...account,
-      id: 'valid_id'
+      avatarUrl: '',
+      id: 2
     }
     const data = await Promise.resolve(fakeAccount)
     return data
@@ -206,20 +208,24 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'any_mail',
         password: 'any_password',
-        confirmPassword: 'any_password'
+        confirmPassword: 'any_password',
+        role: UserRole.ADMINISTRATOR
       }
     }
     await sup.handler(httpRequest)
     expect(addSpyOn).toHaveBeenCalledWith({
       name: 'any_name',
       email: 'any_mail',
-      password: 'any_password'
+      password: 'any_password',
+      role: UserRole.ADMINISTRATOR
     })
     await expect(addSpyOn.mock.results[0].value).resolves.toEqual({
-      id: 'valid_id',
+      id: 2,
       email: 'any_mail',
       name: 'any_name',
-      password: 'any_password'
+      password: 'any_password',
+      avatarUrl: '',
+      role: UserRole.ADMINISTRATOR
     })
   })
 

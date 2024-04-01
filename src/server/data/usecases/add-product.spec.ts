@@ -1,11 +1,12 @@
-import { type ProductModel, type AddProductModel, ProductStatus } from '../../domain/models/product'
+import { ProductStatus } from '@prisma/client'
+import { type ProductModel, type AddProductModel } from '../../domain/models/product'
 import { type AddProductRepository } from '../protocols/add-product.repository'
 import { AddProductData } from './add-product'
 
 class AddProductRepositoryMock implements AddProductRepository {
   async add (productData: AddProductModel): Promise<ProductModel> {
-    const productCreated = Object.assign({}, productData, {
-      id: 987, status: ProductStatus.APPROVED
+    const productCreated: ProductModel = Object.assign({}, productData, {
+      id: 987, status: ProductStatus.PENDING
     })
     return await Promise.resolve(productCreated)
   }
@@ -49,10 +50,10 @@ describe('AddProductData', () => {
       suportMailAdress: 'suport_adress@email.com'
     }
 
-    const productCreated = await addProductData.add(productData)
+    const productCreated = await addProductData.add(productData, 987)
     expect(productCreated).toEqual({
       ...productData,
-      status: ProductStatus.APPROVED
+      status: ProductStatus.PENDING
     })
   })
 })

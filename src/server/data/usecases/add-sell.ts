@@ -9,12 +9,11 @@ export class AddSellData implements AddSell {
   constructor (
     private readonly sellRepository: AddSellRepository,
     private readonly loadAccountByProductIdRepository: LoadAccountByProductIdRepository,
-    private readonly loadProductByIdRepository: LoadProductByIdRepository
   ) {}
 
   async add (sell: Omit<AddSellModel, 'customerId'>, customerId: number): Promise<SellModel> {
     const ownerProduct = await this.loadAccountByProductIdRepository.loadByProductId(sell.productId)
-    if (customerId === ownerProduct.id) {
+    if (!ownerProduct || customerId === ownerProduct.id) {
       throw new AccessDeniedError()
     }
     const sellPriceCalculed = this.calculeTotalSellCents(sell.quantity, sell.totalCents)

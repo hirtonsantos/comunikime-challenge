@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+
+  token     String?
+  name      String
+  avatarUrl String?
+  role      UserRole  @default(CUSTOMER)
+  password  String?
+  Product   Product[]
+  Sell      Sell[]
+
+  @@map("tbl_users")
+}
+
+model Product {
+  id               Int           @id @default(autoincrement())
+  name             String
+  price            String
+  description      String?
+  quantity         Int
+  suportMailAdress String
+  status           ProductStatus? @default(PENDING)
+  category         String
+  ownerId          Int           @map("owner_id")
+
+  User User @relation(fields: [ownerId], references: [id])
+
+  @@map("tbl_products")
+}
+
+model Sell {
+  id         Int               @id @default(autoincrement())
+  status     SellCurrentStatus?
+  totalCents String
+  customerId Int               @map("customer_id")
+
+  User User @relation(fields: [customerId], references: [id])
+
+  @@map("tbl_sells")
+}
+
+enum UserRole {
+  ADMINISTRATOR
+  CUSTOMER
+}
+
+enum ProductStatus {
+  PENDING
+  APPROVED
+  DISAPPROVED
+  PAUSED
+}
+
+enum SellCurrentStatus {
+  REFUNDED
+  PAID
+  EXPIRED
+}

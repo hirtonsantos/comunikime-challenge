@@ -8,8 +8,8 @@ export class AddProductData implements AddProduct {
     private readonly addProductRepository: AddProductRepository
   ) {}
 
-  async add (productData: AddProductModel): Promise<ProductModel> {
-    const product = await this.addProductRepository.add(productData)
+  async add (productData: AddProductModel, ownerId: number): Promise<ProductModel> {
+    const product = await this.addProductRepository.add(productData, ownerId)
     return product
   }
 }

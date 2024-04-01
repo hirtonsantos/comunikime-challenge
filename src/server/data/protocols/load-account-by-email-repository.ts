@@ -1,11 +1,11 @@
 export interface LoadAccountByEmailRepository {
-  loadByEmail: (email: string) => Promise<LoadAccountByEmailRepository.Result>
+  loadByEmail: (email: string) => Promise<LoadAccountByEmailRepository.Result | null>
 }
 
 export namespace LoadAccountByEmailRepository {
   export interface Result {
-    id: string
+    id: number
     name: string
-    password: string
+    password: string | null
   }
 }

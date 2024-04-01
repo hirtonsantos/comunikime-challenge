@@ -10,20 +10,27 @@ export class AddProductController implements Controller {
     this.addProduct = addProduct
   }
 
-  async handler (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handler (httpRequest: AddProductController.Request): Promise<HttpResponse> {
     try {
       const { suportMailAdress } = httpRequest.body
+      const accountId = Number(httpRequest.accountId)
       const emailIsValid = this.emailValidator.isValid(suportMailAdress)
       if (!emailIsValid) {
         return badRequestError(new InvalidEmailError())
       }
-      const product = await this.addProduct.add({
-        ...httpRequest.body
-      })
+      const productData = httpRequest.body
+      const product = await this.addProduct.add(productData, accountId)
 
       return ok(product)
     } catch (error) {
       return internalServerError()
     }
+  }
+}
+
+export namespace AddProductController {
+  export interface Request {
+    accountId: number
+    body: any
   }
 }

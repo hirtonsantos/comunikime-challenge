@@ -1,18 +1,14 @@
-export enum ProductStatus {
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
-  DISAPPROVED = 'DISAPPROVED',
-  PAUSED = 'PAUSED'
-}
+import { ProductStatus } from "@prisma/client"
+
 
 export interface ProductModel {
   id: number
   name: string
   price: string
-  description: string
+  description: string | null
   quantity: number
   suportMailAdress: string
-  status: ProductStatus
+  status: ProductStatus | null
   category: string
 }
 

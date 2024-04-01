@@ -1,6 +1,7 @@
 import GitHubProvider from "next-auth/providers/github";
 import { signInSchema } from "./schema";
 import { NextAuthOptions } from "next-auth";
+import { prismaConnection } from "@/server/infra/db/prisma";
 
 export interface IUser {
   email?: string | null;
@@ -20,37 +21,33 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user }: {user: any}) {
       const { id, email, image, name } = signInSchema.parse(user);
 
-      /*
-      const dbUser = await prisma.user.findUnique({
+      const dbUser = await prismaConnection.user.findUnique({
         where: { email },
       });
 
       if (!dbUser) {
-        await prisma.user.create({
+        await prismaConnection.user.create({
           data: {
             email: email,
             avatarUrl: image || "",
             name: name || "",
-            login: id,
+            id: Number(id),
           },
         });
       }
-      */
 
       return true;
     },
 
     async session({ session }: {session: any}) {
       if (session.user) {
-        /*
-        const dbUser = await prisma.user.findUnique({
+        const dbUser = await prismaConnection.user.findUnique({
           where: { email: session.user.email || "" },
         });
 
         if (dbUser) {
           session.user.id = dbUser.id;
         }
-        */
       }
 
       return session;

@@ -8,7 +8,6 @@ import { type Controller, type HttpResponse } from '../../protocols'
 export class AddSellController implements Controller {
   constructor (
     private readonly addSell: AddSell,
-    private readonly saveSellProduct: SaveSellProduct
   ) {}
 
   async handler (httpRequest: AddSellController.Request): Promise<HttpResponse> {
@@ -25,16 +24,7 @@ export class AddSellController implements Controller {
       const sell = { productId, totalCents, quantity }
       const sellData = await this.addSell.add(sell, accountId)
 
-      const sellProduct = {
-        ...sellData,
-        sellId: sellData.id,
-        valueCents: totalCents,
-        productId: Number(productId),
-        quantity: Number(quantity)
-      }
-
-      const sellProductData = await this.saveSellProduct.save(sellProduct)
-      return ok(sellProductData)
+      return ok(sellData)
     } catch (error) {
       return handleErrors(error)
     }

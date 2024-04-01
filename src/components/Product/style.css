@@ -1,0 +1,127 @@
+
+.product-card{
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: aqua;
+    margin-right: 25px;
+    margin-top: 25px;
+
+    align-items: flex-start;
+
+    width: 254px;
+    height: max-content;
+    left: 16px;
+    top: 154px;
+
+    background: #FFFFFF;
+
+    border: 2px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius: 5px;
+
+    padding-bottom: 5px;
+
+}
+
+.details-product{
+    padding-left: 10px;
+}
+
+p, button {
+    padding-bottom: 5px;
+}
+
+
+.name-product {
+    left: 0%;
+    right: 0%;
+    top: 16.67%;
+    bottom: -16.67%;
+
+    font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 24px;
+    /* or 133% */
+
+    color: #333333;
+}
+
+.category-product {
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 20%;
+
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 16px;
+    /* identical to box height, or 133% */
+
+
+    /* grey-300 */
+
+    color: #828282;
+}
+
+.price-product{
+
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+
+
+    color: #27AE60;
+}
+
+img {
+    /* position: absolute; */
+    width: 230px; 
+    /* width: 250px; */
+    background-color: #F5F5F5;
+    height: 210px;
+    left: 68px;
+    top: 139px;
+    margin-bottom: 20px;
+}
+
+@media screen and (min-width: 800px) {
+    .product-card{
+        width: 204px;
+    }   
+    img {
+        width: 200px;
+    }
+    section{
+        overflow: visible;
+        flex-wrap: wrap;
+        /* width: 837px; */
+    }
+    .carrinho{
+        /* position: absolute; */
+        /* left: 760px; */
+        /* bottom: 100px; */
+        width: 420px;    
+    }
+    .pesquisa{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    #button-buscar{
+        margin-left: 240px;
+    }
+    .barra-de-pesquisa{
+        width: 377px;
+    }
+    .mae{
+        width: 100%;
+        DISPLAY: FLEX;
+        FLEX-DIRECTION: row;
+    }
+}

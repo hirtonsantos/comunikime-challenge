@@ -1,0 +1,140 @@
+
+.pesquisa {
+    height: 139px;
+    left: 0px;
+    top: 0px;
+    background: #F5F5F5;
+}
+
+h1, h3 {
+    margin: 0px;
+    display: contents;
+}
+
+h1 {
+    font-size: 27px;
+    font-weight: bold
+}
+
+h3 {
+    color: red;
+    font-size: 20px;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 65px;
+    align-items: center;
+}
+
+.barra-de-pesquisa {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+#button-buscar{
+    position: absolute;
+    /* margin-left: 220px; */
+    margin-left: 110px;
+    cursor: pointer;
+}
+
+button {
+    width: 107px;
+    height: 40px;
+    cursor: pointer;
+    background: #27AE60;
+
+    border: 2px solid #27AE60;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+input {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px 0px 15px;
+
+    max-width: 400px;
+    height: 60px;
+    width: 80vw;
+    left: 16px;
+    top: 65px;
+
+    background: #FFFFFF;
+
+    border: 2px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+section {
+    /* width: 335px; */
+    margin-left: 25px;
+    overflow: scroll;
+    display: flex;
+}
+
+.mae{
+    width: 100%;
+    display: unset;
+}
+
+@media screen and (min-width: 375px) {
+    #button-buscar{
+        margin-left: 150px;
+    }
+}
+
+@media screen and (min-width: 425px) {
+    #button-buscar{
+        margin-left: 210px;
+    }
+}
+
+@media screen and (min-width: 799px) {
+    .product-card{
+        width: 204px;
+    }   
+    img {
+        width: 200px;
+    }
+    section{
+        overflow: visible;
+        flex-wrap: wrap;
+        width: 690px;
+        margin-left: 80px;
+    }
+    .carrinho{
+        /* position: absolute; */
+        /* left: 760px; */
+        /* bottom: 100px; */
+        width: 420px;    
+        margin: 0px;
+        margin-top: 30px;    
+    }
+    .pesquisa{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+    #button-buscar{
+        margin-left: 240px;
+    }
+    .barra-de-pesquisa{
+        width: 377px;
+    }
+    .mae{
+        width: 100%;
+        display: flex;
+        gap: 100px;
+    }
+}
+

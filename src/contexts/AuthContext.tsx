@@ -1,9 +1,9 @@
 'use client'
 
-import { createContext, useEffect, useState } from "react";
-import { useRouter } from 'next/navigation';
 import { AuthService } from "@/services/AuthService";
 import { ProductService } from "@/services/ProductService";
+import { useRouter } from 'next/navigation';
+import { createContext, useEffect, useState } from "react";
 
 type User = {
   companyId: number;
@@ -21,6 +21,7 @@ type AuthContextType = {
   isAuthenticated?: boolean | null;
   user?: User;
   signIn?: any;
+  registerAccount?: any;
   createProduct: any
   findProducts: any;
 }
@@ -33,10 +34,8 @@ export function AuthProvider({ children }: any) {
 
   const [user, setUser] = useState<User>()
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
-  const [loading, setLoading] = useState(false)
 
     async function signIn({ email, password }: SignInData) {
-      setLoading(true)
       await AuthService.login(email, password).then((res) => {
         localStorage.setItem("current_user", JSON.stringify(res.data.user)) as any
         localStorage.setItem("access_token", res.data.token);
@@ -44,7 +43,16 @@ export function AuthProvider({ children }: any) {
         router.push('/');
       }).catch((error) => {
       })
-      setLoading(false)
+    }
+
+    async function registerAccount(data: any) {
+      await AuthService.register(data).then((res) => {
+        localStorage.setItem("current_user", JSON.stringify(res.data.user)) as any
+        localStorage.setItem("access_token", res.data.token);
+        setUser(res.data.user)
+        router.push('/');
+      }).catch((error) => {
+      })
     }
 
     async function createProduct(data: any) {
@@ -56,13 +64,14 @@ export function AuthProvider({ children }: any) {
     }
 
     useEffect(() => {
-      const user = JSON.parse(localStorage.getItem("current_user") as any)
-      const isAuthenticated = user ? true : false
-      setIsAuthenticated(isAuthenticated)
+      const userJSON = localStorage.getItem("current_user");
+      const isAuthenticated = !!userJSON && userJSON !== 'undefined';
+      isAuthenticated ? JSON.parse(userJSON) : null;    
+      setIsAuthenticated(isAuthenticated);
     }, [user])
 
   return (
-    <AuthContext.Provider value={{signIn, user, isAuthenticated, createProduct, findProducts}}>
+    <AuthContext.Provider value={{signIn, user, isAuthenticated, createProduct, findProducts, registerAccount}}>
       {children}
     </AuthContext.Provider>
   )

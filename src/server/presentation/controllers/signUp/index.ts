@@ -1,12 +1,14 @@
+import { LoadAccountByEmailRepository } from '@/server/data/protocols/load-account-by-email-repository'
 import { type Authentication } from '../../../domain/usecases/authentication'
 import { InvalidEmailError, MissingParamError } from './errors'
 import { badRequestError, internalServerError, ok } from './helpers'
-import type { Controller, EmailValidator, HttpRequest, HttpResponse, AddAccount } from './protocols'
+import type { AddAccount, Controller, EmailValidator, HttpRequest, HttpResponse } from './protocols'
 
 export class SignUpController implements Controller {
   constructor (
     private readonly emailValidator: EmailValidator,
     private readonly addAccount: AddAccount,
+    private readonly loadAccountRepo: LoadAccountByEmailRepository,
     private readonly authentication: Authentication
   ) {
     this.emailValidator = emailValidator
@@ -23,22 +25,22 @@ export class SignUpController implements Controller {
       }
       const { name, email, password, confirmPassword, role } = httpRequest.body
       const emailIsValid = this.emailValidator.isValid(email)
-      if (!emailIsValid) {
+      const accountExists = await this.loadAccountRepo.loadByEmail(email)
+      if (!emailIsValid || accountExists) {
         return badRequestError(new InvalidEmailError())
       }
       if (password !== confirmPassword) {
         return badRequestError(new MissingParamError('confirmPassword'))
       }
-      const accountCreated = await this.addAccount.add({
+      await this.addAccount.add({
         name,
         email,
         password,
         role
       })
-      const pass = accountCreated.password as string
       const authenticationModel = await this.authentication.auth({
         email,
-        password: pass
+        password: password
       })
       return ok(authenticationModel)
     } catch {

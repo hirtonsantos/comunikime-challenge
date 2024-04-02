@@ -1,39 +1,34 @@
 'use client'
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { NativeSelect, TextField } from "@mui/material";
-import { Container, Error, Div } from "./style";
-import LeafAnimation from "@/components/leafsAnimation";
-import Header from "@/components/Header";
 import Button from "@/components/Button";
+import Header from "@/components/Header";
 import Links from "@/components/Links";
+import LeafAnimation from "@/components/leafsAnimation";
+import { AuthContext } from "@/contexts/AuthContext";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { NativeSelect, TextField } from "@mui/material";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
 import { schema } from "./schema";
+import { Container, Div } from "./style";
 
 function Signup() {
-
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm({ 
+    resolver: yupResolver(schema),
+    defaultValues: {
+      role: "ADMINISTRATOR"
+    }
+  });
 
-  const onSubmitFunction = (data: any) => {
-    delete data.confirmPassword;
-    console.log({data})
-    /*
-    api
-      .post("users/", data)
-      .then((res) => {
-        console.log({res})
-        history.push("/login");
-        toast.success("Usuário cadastrado com sucesso!");
-      })
-      .catch((err) => {
-        console.log({err});
-      });
-    */
+  const { registerAccount } = useContext(AuthContext)
+
+  const onSubmitFunction = async (data: any) => {
+    await registerAccount(data)
   };
 
   return (
@@ -43,7 +38,7 @@ function Signup() {
         <Header />
         <form onSubmit={handleSubmit(onSubmitFunction)}>
           <TextField
-            {...register("username")}
+            {...register("name")}
             margin="normal"
             fullWidth
             label="Usuário"
@@ -69,13 +64,13 @@ function Signup() {
             // error={errors.password?.message}
           />
           <TextField
-            {...register("role")}
+            {...register("confirmPassword")}
             margin="normal"
             fullWidth
             label="Confirmar senha"
-            type="text"
+            type="password"
             variant="outlined"
-            // error={errors.confirmPassword?.message}
+            error={!!errors?.confirmPassword?.message}
           />
           <NativeSelect
               {...register("role")}

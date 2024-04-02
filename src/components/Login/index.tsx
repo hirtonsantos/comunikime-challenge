@@ -2,20 +2,19 @@
 'use client'
 
 
-import { TextField } from "@mui/material";
-import { Div, Form, Container } from "./style";
-import * as yup from "yup";
-import { useForm } from "react-hook-form";
+import { AuthContext } from "@/contexts/AuthContext";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { TextField } from "@mui/material";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 import Button from "../Button";
 import Header from "../Header";
-import LeafAnimation from "../leafsAnimation";
 import Links from "../Links";
-import { AuthContext } from "@/contexts/AuthContext";
-import { useContext } from "react";
+import LeafAnimation from "../leafsAnimation";
+import { Container, Div, Form } from "./style";
 
 function Login() {
-  // const dispatch = useDispatch();
 
   const formSchema = yup.object().shape({
     email: yup.string().required("Usuário obrigatório"),
@@ -36,7 +35,6 @@ function Login() {
     console.log({data})
     console.log('ola gente')
     signIn(data)
-    // dispatch(signInThunk(data));
   };
 
   return (
@@ -66,7 +64,7 @@ function Login() {
           />
           <Button type="submit" text={"Entrar"} />
         </Form>
-        <Links to={"/signup"} label={"Cadastrar-se"}></Links>
+        <Links to={"/register"} label={"Cadastrar-se"}></Links>
       </Div>
     </Container>
   );

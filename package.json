@@ -7,9 +7,8 @@
     "test": "jest",
     "prepare": "husky install",
     "dev": "next dev",
-    "back": "tsx src/server/main/server.ts",
+    "start": "tsx src/server/main/server.ts",
     "build": "prisma generate && next build",
-    "start": "next start",
     "lint": "next lint"
   },
   "keywords": [],

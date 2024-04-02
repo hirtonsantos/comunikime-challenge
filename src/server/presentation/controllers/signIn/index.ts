@@ -6,11 +6,12 @@ import { LoadAccountByEmailRepository } from "@/server/data/protocols/load-accou
 import { BcryptAdapter } from "@/server/infra/criptography/bcrypt-adapter";
 import { JwtAdapter } from "@/server/infra/criptography/jwt-adapter";
 import { CreateSessionUseCase } from "@/server/usecases/authentication";
+import { UpdateAccessTokenRepository } from "@/server/data/protocols/update-access-token-repository";
 
 export class SigninController implements Controller {
   constructor(
     private readonly createSessionValidation: CreateSessionValidation,
-    private readonly findUserByEmailRepository: LoadAccountByEmailRepository,
+    private readonly accountRepository: LoadAccountByEmailRepository & UpdateAccessTokenRepository,
     private readonly cryptographyProvider: BcryptAdapter,
     private readonly jwtProvider: JwtAdapter,
     private readonly createSessionUseCase: CreateSessionUseCase
@@ -24,7 +25,7 @@ export class SigninController implements Controller {
         return badRequestError(new MissingParamError('email or password'));
       }
 
-      const user = await this.findUserByEmailRepository.loadByEmail(email);
+      const user = await this.accountRepository.loadByEmail(email);
 
       if (!user) {
         return badRequestError(new InvalidEmailError());
@@ -37,9 +38,10 @@ export class SigninController implements Controller {
       if (!isValidPassword) {
         return badRequestError(new InvalidEmailError());
       }
-      
 
       const token = await this.jwtProvider.encrypt(String(user.id));
+
+      await this.accountRepository.updateAccessToken(user.id, token)
 
       return ok({ token, user });
     } catch (error) {

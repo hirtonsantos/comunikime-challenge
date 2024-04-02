@@ -22,6 +22,7 @@ export class AddSellController implements Controller {
       }
 
       const sell = { productId, totalCents, quantity }
+      console.log({sell})
       const sellData = await this.addSell.add(sell, accountId)
 
       return ok(sellData)

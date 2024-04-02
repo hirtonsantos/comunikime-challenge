@@ -3,12 +3,13 @@ import { type AddSell } from '../../domain/usecases/add-sell'
 import { AccessDeniedError } from '../../presentation/errors/acessDeniedError'
 import { type AddSellRepository } from '../protocols/add-sell.repository'
 import { type LoadAccountByProductIdRepository } from '../protocols/load-account-by-product-id-repository'
-import { type LoadProductByIdRepository } from '../protocols/load-product-by-id-repository'
+import { UpdateQuantityProductByIdRepository } from '../protocols/update-quantity-product-by-id'
 
 export class AddSellData implements AddSell {
   constructor (
     private readonly sellRepository: AddSellRepository,
     private readonly loadAccountByProductIdRepository: LoadAccountByProductIdRepository,
+    private readonly updateQuantityProduct: UpdateQuantityProductByIdRepository
   ) {}
 
   async add (sell: Omit<AddSellModel, 'customerId'>, customerId: number): Promise<SellModel> {
@@ -23,7 +24,9 @@ export class AddSellData implements AddSell {
       quantity: sell.quantity,
       customerId
     }
+    console.log({addSell})
     const sellCreated = await this.sellRepository.add(addSell, ownerProduct.id)
+    this.updateQuantityProduct.updateQuantity(ownerProduct.id, sell.quantity)
     return sellCreated
   }
 
